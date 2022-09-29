@@ -6,12 +6,9 @@ import UserContext from "./context/UserContext";
 
 const App = () => {
   const [users, setUsers] = useState(undefined);
+  const [row, setRow] = useState(undefined);
 
-  const rowEvents = {
-    onclick: (e, row) => {
-      console.log(row);
-    },
-  };
+  console.log(row);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -25,11 +22,11 @@ const App = () => {
         rowKey="id"
         dataSource={users}
         columns={Columns}
-        rowEvent={rowEvents}
-        onRow={(r) => ({
-          onClick: () => console.log("clickee!"),
+        onRow={(record) => ({
+          onClick: (event) => {
+            setRow(record);
+          },
         })}
-        row
       />
       <Card title="First row content"></Card>
     </UserContext.Provider>
