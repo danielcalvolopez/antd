@@ -1,36 +1,38 @@
 import "./App.css";
-import { Button, Table } from "antd";
+import { Card, Table } from "antd";
+import { useEffect, useState } from "react";
+import { Columns } from "./components/Columns";
+import UserContext from "./context/UserContext";
 
 const App = () => {
-  const data = [
-    { key: "1", name: "Frank", age: 24, location: "London" },
-    { key: "2", name: "Mike", age: 28, location: "Amsterdam" },
-    { key: "3", name: "Martha", age: 31, location: "Oslo" },
-  ];
+  const [users, setUsers] = useState(undefined);
 
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+  const rowEvents = {
+    onclick: (e, row) => {
+      console.log(row);
     },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-  ];
+  };
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((data) => setUsers(data));
+  }, []);
 
   return (
-    <div>
-      <Table dataSource={data} columns={columns} />
-      <Button type="primary">Button</Button>
-    </div>
+    <UserContext.Provider value={{ users }}>
+      <Table
+        rowKey="id"
+        dataSource={users}
+        columns={Columns}
+        rowEvent={rowEvents}
+        onRow={(r) => ({
+          onClick: () => console.log("clickee!"),
+        })}
+        row
+      />
+      <Card title="First row content"></Card>
+    </UserContext.Provider>
   );
 };
 
