@@ -28,6 +28,14 @@ const getColumnSearchProps = (dataIndex) => ({
     record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
 });
 
+// const sortAlpha = (dataIndex) => ({
+//   sorter: nameAlphabeticSort = (user1, user2) => {
+//     if (user1.name < user2.name) return -1;
+//     if (user1.name > user2.name) return 1;
+//     return 0;
+//   };
+// })
+
 export const Columns = [
   {
     title: "Name",
