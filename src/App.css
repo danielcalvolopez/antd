@@ -38,3 +38,9 @@
     transform: rotate(360deg);
   }
 }
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  gap: 350px;
+}

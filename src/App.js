@@ -1,14 +1,11 @@
 import "./App.css";
-import { Card, Table } from "antd";
+import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { Columns } from "./components/Columns";
 import UserContext from "./context/UserContext";
 
 const App = () => {
   const [users, setUsers] = useState(undefined);
-  const [row, setRow] = useState(undefined);
-
-  console.log(row);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -22,13 +19,14 @@ const App = () => {
         rowKey="id"
         dataSource={users}
         columns={Columns}
-        onRow={(record) => ({
-          onClick: (event) => {
-            setRow(record);
-          },
-        })}
+        footer={(record) => (
+          <div className="footer">
+            <p>{record[0]?.name}</p>
+            <p>{record[0]?.email}</p>
+            <p>{record[0]?.address.city}</p>
+          </div>
+        )}
       />
-      <Card title="First row content"></Card>
     </UserContext.Provider>
   );
 };
